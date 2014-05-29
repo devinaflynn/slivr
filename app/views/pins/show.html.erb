@@ -1,0 +1,106 @@
+
+
+<div class="row">
+
+<% if user_signed_in? %>
+
+			<div class="col-sm-2 col-md-3">
+	            <div class="panel panel-default">
+	                <div class="panel-body">   
+	                <h3>New Comment</h3> 
+	                	<%=form_for [@pin, @comment] do |f| %>
+	                		<%= f.text_field :title, :placeholder => "Title", :style => "margin-bottom:5px;" %>
+	                		<%= f.text_area :comment, :rows => "5", :style => "margin-bottom:10px;", :placeholder => "Comment" %>
+	                        <%=f.submit "Submit", :class => "btn btn-danger" %>
+	                        
+	                        <% end %>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+
+<% end %>
+	<div class=" col-md-7">
+		<div class="panel panel-default">
+		<div class="panel-heading center">
+			<%= image_tag @pin.image.url(:medium) %>
+		</div>
+		<div class="panel-body">
+		<p><%= @pin.description %></p>
+		<p><strong><%= @pin.user.name if @pin.user %></strong></p>
+
+		<% if @pin.user == current_user %>
+			<%= link_to edit_pin_path(@pin) do %>
+        <span class="glyphicon glyphicon-edit"></span>
+        Edit
+      <% end %>
+		<% end %>
+		</div>
+	</div>
+
+
+
+  		<div id="comments">
+    
+    		
+  			<% if @pin.comments.exists? %>
+    		<div class="container">
+    			<div class="row">
+		        <div class="panel panel-default widget">
+		            <div class="panel-heading">
+		                <span class="glyphicon glyphicon-comment"></span>
+		                <h3 class="panel-title">
+		                    Recent Comments</h3>
+		                <span class="label label-info">
+		                    78</span>
+		            </div>
+		            <div class="panel-body">
+		                <ul class="list-group">
+
+		                <% for comment in @pin.comments.select{|c| c.persisted?} %>
+		                    <li class="list-group-item">
+		                        <div class="row">
+		                            <div class="col-xs-2 col-md-1">
+		                                <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div>
+		                            <div class="col-xs-10 col-md-11">
+		                                <div>
+		                                    <%=comment.title %>
+		                                    <div class="mic-info">
+		                                        By: <%=comment.user.name %>
+		                                    </div>
+		                                </div>
+		                                <div class="comment-text">
+		                                    <%=comment.comment %>
+		                                </div>
+		                                <div class="action">
+		                                    <button type="button" class="btn btn-warning btn-xs" title="Edit">
+		                                        <span class="glyphicon glyphicon-envelope"></span>
+		                                    </button>
+		                                    <button type="button" class="btn btn-success btn-xs" title="Approved">
+		                                        <span class="glyphicon glyphicon-ok"></span>
+		                                    </button>
+		                                    
+		                                    <% if current_user && comment.user == current_user %>
+
+
+										<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), pin_comment_path(@pin, comment), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-danger btn-xs' %>
+
+		                          
+		                                    <% end %>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </li>
+		                    <% end %>
+		                    
+		                </ul>
+
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+<% end %>
+
+  </div>
+

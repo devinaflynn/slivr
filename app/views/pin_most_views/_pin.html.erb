@@ -1,0 +1,16 @@
+<li class="col-md-4 col-sm-6 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-thumbnail">  <%= link_to (image_tag pin.image(:medium), :alt => pin.title, :style => "width: 100%; height: 270px;"), pin %>
+          <div class="panel-body">
+            <p class="lead">Blabla</p>
+          </div>
+            <% if current_user == pin.user %>
+
+          <%= link_to 'Edit', edit_pin_path(pin) %>
+          <%= link_to 'Destroy', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+      <% end %>
+
+        </div>
+
+</li>
