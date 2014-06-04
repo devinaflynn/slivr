@@ -42,8 +42,17 @@
               <span class="glyphicon glyphicon-plus"></span> New Pin
             <% end %>
           </li>
-          <li><%= link_to "Account Settings", edit_user_registration_path %></li>
+              <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              Account Settings <span class="caret"></span>
+              </a>
+                <ul class="dropdown-menu">
+          <li><%= link_to "Edit Account", edit_user_registration_path %></li>
           <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+        </ul>
+      </li>
+
+
         <% else %>
           <li><%= link_to "Sign in", new_user_session_path %></li>
         <% end %>

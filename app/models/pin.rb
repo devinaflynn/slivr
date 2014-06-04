@@ -5,7 +5,7 @@ class Pin < ActiveRecord::Base
 
 
 
-	has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+	has_attached_file :image, :styles => { :medium => "300X300>", :thumb => "100X100>" }
 
   
 
@@ -14,6 +14,9 @@ class Pin < ActiveRecord::Base
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
 	has_one :visit
+
+  validates :team, presence: true
+  validates :position, presence: true
 
 	def self.top_viewed(page, time_period)
     case time_period
